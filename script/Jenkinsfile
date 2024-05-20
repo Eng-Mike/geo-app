@@ -4,6 +4,14 @@ pipeline{
     maven 'M2_HOME'
    }
    stages{
+    stage("analysis"){
+        steps{
+            withSonarQubeEnv('sonarqube'){
+                sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Eng-Mike_geo-app'
+            }
+            
+        }
+    }
     stage("maven"){
         steps{ 
         sh 'mvn clean validate compile install test package'
